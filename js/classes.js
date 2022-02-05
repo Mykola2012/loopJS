@@ -95,3 +95,58 @@ try {
 } catch (err) {
   console.log("err :>> ", err);
 }
+
+/******************************************************* */
+
+class User1 {
+  constructor(name, surname, age, isMale, email, isBanned = false) {
+    this.firstName = name;
+    this.lastName = surname;
+    this.age = age;
+    this.isMale = isMale;
+    this.email = email;
+    this.isBanned = isBanned;
+  }
+
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+const user1 = new User("Test", "Testovich", 27, false, "test@test.com");
+
+class Moderator extends User1 {
+  constructor(name, surname, age, isMale, email, permission) {
+    super(name, surname, age, isMale, email);
+    this.permission = permission;
+  }
+}
+
+const moderator = new Moderator(
+  "Mod",
+  "Modovich",
+  29,
+  true,
+  "mod@test.com",
+  {}
+);
+
+console.log("moderator :>> ", moderator);
+
+class Admin extends Moderator {
+  constructor(name, surname, age, isMale, email, permission) {
+    super(name, surname, age, isMale, email, permission);
+  }
+  band(user) {
+    user.isBanned = true;
+  }
+
+  unbann(user) {
+    user.isBanned = false;
+  }
+}
+
+const admin = new Admin("Admin", "Adminovich", 54, false, "admin@test.com", {});
+
+admin.band(moderator);
+console.log("moderator :>> ", moderator);
